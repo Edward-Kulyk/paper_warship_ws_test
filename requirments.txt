@@ -1,1 +1,3 @@
 django
+Jinja2
+django-jinja

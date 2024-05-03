@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battleship Game</title>
+    <style>
+        /* Ваши стили */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Battleship Game</h1>
+        <p>Welcome, {{ player }}!</p>
+        <p>Game ID: {{ game_id }}</p>
+        <p>Opponent: {{ opponent }}</p>
+        <div class="game-board">
+            <!-- Игровое поле -->
+        </div>
+    </div>
+
+    <script>
+        // Создание WebSocket соединения для конкретной игры
+        const game_id = '{{ game_id }}';
+        const ws = new WebSocket(`ws://localhost:8000/game/${game_id}/ws/`);
+
+        // Обработчики событий WebSocket соединения
+        ws.onopen = function(event) {
+            console.log('WebSocket connected');
+            // Отправка данных на сервер, если необходимо
+        };
+
+        ws.onclose = function(event) {
+            console.log('WebSocket disconnected');
+        };
+
+        ws.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            console.log('Received message:', data);
+            // Обновление интерфейса игры на основе полученных данных
+        };
+
+        // Ваши функции и обработчики событий здесь
+
+    </script>
+</body>
+</html>

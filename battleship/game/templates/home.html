@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battleship Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        input[type="text"], input[type="submit"] {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Battleship Game</h1>
+        <form id="playerForm" action="new_game/" method="post">
+            {% csrf_token %}
+            <input type="text" name="player_name" placeholder="Enter your name" required>
+            <input type="submit" value="Create New Game">
+        </form>
+        <form id="joinGameForm" action="join_game/" method="post">
+            {% csrf_token %}
+            <input type="text" name="player_name" placeholder="Enter your name" required>
+            <input type="text" name="game_id" placeholder="Enter game ID to join" required>
+            <input type="submit" value="Connect to Game">
+        </form>
+    </div>
+
+    <script>
+        // Функция для сохранения имени игрока в кэше браузера
+        function savePlayerName() {
+            var playerNameInput = document.getElementById("playerName");
+            var playerName = playerNameInput.value;
+            localStorage.setItem("playerName", playerName);
+        }
+
+        // Функция для загрузки имени игрока из кэша браузера, если оно есть
+        function loadPlayerName() {
+            var playerName = localStorage.getItem("playerName");
+            if (playerName) {
+                var playerNameInput = document.getElementById("playerName");
+                playerNameInput.value = playerName;
+                var playerNameJoinInput = document.getElementById("playerNameJoin");
+                playerNameJoinInput.value = playerName;
+            }
+        }
+
+        // При загрузке страницы загружаем имя игрока из кэша браузера, если оно есть
+        window.onload = loadPlayerName;
+    </script>
+</body>
+</html>

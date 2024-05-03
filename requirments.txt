@@ -1,3 +1,7 @@
 django
 Jinja2
 django-jinja
+channels
+daphne
+redis
+django-redis

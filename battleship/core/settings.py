@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'game',
+    'core',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -49,7 +52,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'paper_warship_project.urls'
+ROOT_URLCONF = 'core.urls'
 
 TEMPLATES = [
     {
@@ -67,7 +70,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'paper_warship_project.wsgi.application'
+ASGI_APPLICATION = 'paper_warship_project.asgi.application'
 
 
 # Database
@@ -121,3 +124,31 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#Redis cache connection
+
+CACHE_REDIS_HOST = 'localhost'
+CACHE_REDIS_PORT = 6379
+CACHE_REDIS_DB = 1
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://{}:{}/{}'.format(CACHE_REDIS_HOST, CACHE_REDIS_PORT, CACHE_REDIS_DB),
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        },
+    },
+}
+
+#Redis game info connection
+
+GAME_REDIS_HOST = 'localhost'
+GAME_REDIS_PORT = 6379
+GAME_REDIS_DB = 2
+
+GAME_REDIS_CONNECTION = {
+    'host': GAME_REDIS_HOST,
+    'port': GAME_REDIS_PORT,
+    'db': GAME_REDIS_DB,
+}
